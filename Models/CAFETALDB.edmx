@@ -1,0 +1,771 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CAFETALDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ADM_INSUMOS">
+          <Key>
+            <PropertyRef Name="id_aplica" />
+          </Key>
+          <Property Name="id_aplica" Type="int" Nullable="false" />
+          <Property Name="id_lote" Type="int" />
+          <Property Name="id_insumo" Type="int" />
+          <Property Name="cant_usada" Type="int" />
+          <Property Name="fecha_aplic" Type="date" />
+          <Property Name="id_proveedor" Type="int" />
+        </EntityType>
+        <EntityType Name="CULTIVO">
+          <Key>
+            <PropertyRef Name="id_cultivo" />
+          </Key>
+          <Property Name="id_cultivo" Type="int" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ubicacion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="fecha_inicio" Type="date" Nullable="false" />
+          <Property Name="fecha_fin" Type="date" />
+          <Property Name="id_usuario" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="INSUMO">
+          <Key>
+            <PropertyRef Name="id_insumo" />
+          </Key>
+          <Property Name="id_insumo" Type="int" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" />
+          <Property Name="tipo" Type="varchar" MaxLength="50" />
+          <Property Name="id_proveedor" Type="int" />
+          <Property Name="cantidad" Type="int" />
+          <Property Name="f_entrega" Type="date" />
+        </EntityType>
+        <EntityType Name="LOTE">
+          <Key>
+            <PropertyRef Name="id_lote" />
+          </Key>
+          <Property Name="id_lote" Type="int" Nullable="false" />
+          <Property Name="id_usuario" Type="int" Nullable="false" />
+          <Property Name="variedad" Type="varchar" MaxLength="100" />
+          <Property Name="inicio_siembra" Type="date" />
+          <Property Name="estado" Type="varchar" MaxLength="50" />
+          <Property Name="fecha_fin_siembra" Type="date" />
+          <Property Name="area" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="cantidad_plantas" Type="int" />
+          <Property Name="observaciones" Type="text" />
+          <Property Name="id_cultivo" Type="int" />
+        </EntityType>
+        <EntityType Name="PLANTA">
+          <Key>
+            <PropertyRef Name="id_planta" />
+          </Key>
+          <Property Name="id_planta" Type="int" Nullable="false" />
+          <Property Name="id_lote" Type="int" Nullable="false" />
+          <Property Name="fecha_plantacion" Type="date" Nullable="false" />
+          <Property Name="estado" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="observaciones" Type="text" />
+        </EntityType>
+        <EntityType Name="PROVEEDOR">
+          <Key>
+            <PropertyRef Name="id_proveedor" />
+          </Key>
+          <Property Name="id_proveedor" Type="int" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" />
+          <Property Name="cel_fijo" Type="varchar" MaxLength="15" />
+          <Property Name="tipo_material" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="REPORTES">
+          <Key>
+            <PropertyRef Name="id_report" />
+          </Key>
+          <Property Name="id_report" Type="int" Nullable="false" />
+          <Property Name="id_lote" Type="int" />
+          <Property Name="id_usuario" Type="int" />
+          <Property Name="fecha" Type="datetime" />
+          <Property Name="comentarios" Type="text" />
+        </EntityType>
+        <EntityType Name="ROL">
+          <Key>
+            <PropertyRef Name="id_rol" />
+          </Key>
+          <Property Name="id_rol" Type="int" Nullable="false" />
+          <Property Name="nombre_rol" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="USUARIO">
+          <Key>
+            <PropertyRef Name="id_usuario" />
+          </Key>
+          <Property Name="id_usuario" Type="int" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="correo" Type="varchar" MaxLength="50" />
+          <Property Name="contraseña" Type="varchar" MaxLength="50" />
+          <Property Name="id_rol" Type="int" Nullable="false" />
+          <Property Name="estado_verificacion" Type="bit" Nullable="false" />
+          <Property Name="codigo_verificacion" Type="varchar" MaxLength="50" />
+          <Property Name="estado_usuario" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__ADM_INSUM__id_in__534D60F1">
+          <End Role="INSUMO" Type="Self.INSUMO" Multiplicity="0..1" />
+          <End Role="ADM_INSUMOS" Type="Self.ADM_INSUMOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INSUMO">
+              <PropertyRef Name="id_insumo" />
+            </Principal>
+            <Dependent Role="ADM_INSUMOS">
+              <PropertyRef Name="id_insumo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ADM_INSUM__id_lo__52593CB8">
+          <End Role="LOTE" Type="Self.LOTE" Multiplicity="0..1" />
+          <End Role="ADM_INSUMOS" Type="Self.ADM_INSUMOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LOTE">
+              <PropertyRef Name="id_lote" />
+            </Principal>
+            <Dependent Role="ADM_INSUMOS">
+              <PropertyRef Name="id_lote" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ADM_INSUM__id_pr__5441852A">
+          <End Role="PROVEEDOR" Type="Self.PROVEEDOR" Multiplicity="0..1" />
+          <End Role="ADM_INSUMOS" Type="Self.ADM_INSUMOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PROVEEDOR">
+              <PropertyRef Name="id_proveedor" />
+            </Principal>
+            <Dependent Role="ADM_INSUMOS">
+              <PropertyRef Name="id_proveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CULTIVO__id_usua__02FC7413">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="CULTIVO" Type="Self.CULTIVO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="id_usuario" />
+            </Principal>
+            <Dependent Role="CULTIVO">
+              <PropertyRef Name="id_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__INSUMO__id_prove__4D94879B">
+          <End Role="PROVEEDOR" Type="Self.PROVEEDOR" Multiplicity="0..1" />
+          <End Role="INSUMO" Type="Self.INSUMO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PROVEEDOR">
+              <PropertyRef Name="id_proveedor" />
+            </Principal>
+            <Dependent Role="INSUMO">
+              <PropertyRef Name="id_proveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LOTE__id_usuario__3F466844">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="LOTE" Type="Self.LOTE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="id_usuario" />
+            </Principal>
+            <Dependent Role="LOTE">
+              <PropertyRef Name="id_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__REPORTES__id_lot__4222D4EF">
+          <End Role="LOTE" Type="Self.LOTE" Multiplicity="0..1" />
+          <End Role="REPORTES" Type="Self.REPORTES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LOTE">
+              <PropertyRef Name="id_lote" />
+            </Principal>
+            <Dependent Role="REPORTES">
+              <PropertyRef Name="id_lote" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__REPORTES__id_usu__4316F928">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="0..1" />
+          <End Role="REPORTES" Type="Self.REPORTES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="id_usuario" />
+            </Principal>
+            <Dependent Role="REPORTES">
+              <PropertyRef Name="id_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__USUARIO__id_rol__398D8EEE">
+          <End Role="ROL" Type="Self.ROL" Multiplicity="1" />
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROL">
+              <PropertyRef Name="id_rol" />
+            </Principal>
+            <Dependent Role="USUARIO">
+              <PropertyRef Name="id_rol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LOTE_CULTIVO">
+          <End Role="CULTIVO" Type="Self.CULTIVO" Multiplicity="0..1" />
+          <End Role="LOTE" Type="Self.LOTE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CULTIVO">
+              <PropertyRef Name="id_cultivo" />
+            </Principal>
+            <Dependent Role="LOTE">
+              <PropertyRef Name="id_cultivo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PLANTA_LOTE">
+          <End Role="LOTE" Type="Self.LOTE" Multiplicity="1" />
+          <End Role="PLANTA" Type="Self.PLANTA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LOTE">
+              <PropertyRef Name="id_lote" />
+            </Principal>
+            <Dependent Role="PLANTA">
+              <PropertyRef Name="id_lote" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CAFETALDBModelStoreContainer">
+          <EntitySet Name="ADM_INSUMOS" EntityType="Self.ADM_INSUMOS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CULTIVO" EntityType="Self.CULTIVO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="INSUMO" EntityType="Self.INSUMO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LOTE" EntityType="Self.LOTE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PLANTA" EntityType="Self.PLANTA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PROVEEDOR" EntityType="Self.PROVEEDOR" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="REPORTES" EntityType="Self.REPORTES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ROL" EntityType="Self.ROL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USUARIO" EntityType="Self.USUARIO" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__ADM_INSUM__id_in__534D60F1" Association="Self.FK__ADM_INSUM__id_in__534D60F1">
+            <End Role="INSUMO" EntitySet="INSUMO" />
+            <End Role="ADM_INSUMOS" EntitySet="ADM_INSUMOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ADM_INSUM__id_lo__52593CB8" Association="Self.FK__ADM_INSUM__id_lo__52593CB8">
+            <End Role="LOTE" EntitySet="LOTE" />
+            <End Role="ADM_INSUMOS" EntitySet="ADM_INSUMOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ADM_INSUM__id_pr__5441852A" Association="Self.FK__ADM_INSUM__id_pr__5441852A">
+            <End Role="PROVEEDOR" EntitySet="PROVEEDOR" />
+            <End Role="ADM_INSUMOS" EntitySet="ADM_INSUMOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CULTIVO__id_usua__02FC7413" Association="Self.FK__CULTIVO__id_usua__02FC7413">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="CULTIVO" EntitySet="CULTIVO" />
+          </AssociationSet>
+          <AssociationSet Name="FK__INSUMO__id_prove__4D94879B" Association="Self.FK__INSUMO__id_prove__4D94879B">
+            <End Role="PROVEEDOR" EntitySet="PROVEEDOR" />
+            <End Role="INSUMO" EntitySet="INSUMO" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LOTE__id_usuario__3F466844" Association="Self.FK__LOTE__id_usuario__3F466844">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="LOTE" EntitySet="LOTE" />
+          </AssociationSet>
+          <AssociationSet Name="FK__REPORTES__id_lot__4222D4EF" Association="Self.FK__REPORTES__id_lot__4222D4EF">
+            <End Role="LOTE" EntitySet="LOTE" />
+            <End Role="REPORTES" EntitySet="REPORTES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__REPORTES__id_usu__4316F928" Association="Self.FK__REPORTES__id_usu__4316F928">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="REPORTES" EntitySet="REPORTES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USUARIO__id_rol__398D8EEE" Association="Self.FK__USUARIO__id_rol__398D8EEE">
+            <End Role="ROL" EntitySet="ROL" />
+            <End Role="USUARIO" EntitySet="USUARIO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LOTE_CULTIVO" Association="Self.FK_LOTE_CULTIVO">
+            <End Role="CULTIVO" EntitySet="CULTIVO" />
+            <End Role="LOTE" EntitySet="LOTE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PLANTA_LOTE" Association="Self.FK_PLANTA_LOTE">
+            <End Role="LOTE" EntitySet="LOTE" />
+            <End Role="PLANTA" EntitySet="PLANTA" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CAFETALDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ADM_INSUMOS">
+          <Key>
+            <PropertyRef Name="id_aplica" />
+          </Key>
+          <Property Name="id_aplica" Type="Int32" Nullable="false" />
+          <Property Name="id_lote" Type="Int32" />
+          <Property Name="id_insumo" Type="Int32" />
+          <Property Name="cant_usada" Type="Int32" />
+          <Property Name="fecha_aplic" Type="DateTime" Precision="0" />
+          <Property Name="id_proveedor" Type="Int32" />
+          <NavigationProperty Name="INSUMO" Relationship="Self.FK__ADM_INSUM__id_in__534D60F1" FromRole="ADM_INSUMOS" ToRole="INSUMO" />
+          <NavigationProperty Name="LOTE" Relationship="Self.FK__ADM_INSUM__id_lo__52593CB8" FromRole="ADM_INSUMOS" ToRole="LOTE" />
+          <NavigationProperty Name="PROVEEDOR" Relationship="Self.FK__ADM_INSUM__id_pr__5441852A" FromRole="ADM_INSUMOS" ToRole="PROVEEDOR" />
+        </EntityType>
+        <EntityType Name="CULTIVO">
+          <Key>
+            <PropertyRef Name="id_cultivo" />
+          </Key>
+          <Property Name="id_cultivo" Type="Int32" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ubicacion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fecha_inicio" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="fecha_fin" Type="DateTime" Precision="0" />
+          <Property Name="id_usuario" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="USUARIO" Relationship="Self.FK__CULTIVO__id_usua__02FC7413" FromRole="CULTIVO" ToRole="USUARIO" />
+          <NavigationProperty Name="LOTEs" Relationship="Self.FK_LOTE_CULTIVO" FromRole="CULTIVO" ToRole="LOTE" />
+        </EntityType>
+        <EntityType Name="INSUMO">
+          <Key>
+            <PropertyRef Name="id_insumo" />
+          </Key>
+          <Property Name="id_insumo" Type="Int32" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="tipo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="id_proveedor" Type="Int32" />
+          <Property Name="cantidad" Type="Int32" />
+          <Property Name="f_entrega" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="ADM_INSUMOS" Relationship="Self.FK__ADM_INSUM__id_in__534D60F1" FromRole="INSUMO" ToRole="ADM_INSUMOS" />
+          <NavigationProperty Name="PROVEEDOR" Relationship="Self.FK__INSUMO__id_prove__4D94879B" FromRole="INSUMO" ToRole="PROVEEDOR" />
+        </EntityType>
+        <EntityType Name="LOTE">
+          <Key>
+            <PropertyRef Name="id_lote" />
+          </Key>
+          <Property Name="id_lote" Type="Int32" Nullable="false" />
+          <Property Name="id_usuario" Type="Int32" Nullable="false" />
+          <Property Name="variedad" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="inicio_siembra" Type="DateTime" Precision="0" />
+          <Property Name="estado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="fecha_fin_siembra" Type="DateTime" Precision="0" />
+          <Property Name="area" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="cantidad_plantas" Type="Int32" />
+          <Property Name="observaciones" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="id_cultivo" Type="Int32" />
+          <NavigationProperty Name="ADM_INSUMOS" Relationship="Self.FK__ADM_INSUM__id_lo__52593CB8" FromRole="LOTE" ToRole="ADM_INSUMOS" />
+          <NavigationProperty Name="CULTIVO" Relationship="Self.FK_LOTE_CULTIVO" FromRole="LOTE" ToRole="CULTIVO" />
+          <NavigationProperty Name="USUARIO" Relationship="Self.FK__LOTE__id_usuario__3F466844" FromRole="LOTE" ToRole="USUARIO" />
+          <NavigationProperty Name="REPORTES" Relationship="Self.FK__REPORTES__id_lot__4222D4EF" FromRole="LOTE" ToRole="REPORTES" />
+          <NavigationProperty Name="PLANTAs" Relationship="Self.FK_PLANTA_LOTE" FromRole="LOTE" ToRole="PLANTA" />
+        </EntityType>
+        <EntityType Name="PLANTA">
+          <Key>
+            <PropertyRef Name="id_planta" />
+          </Key>
+          <Property Name="id_planta" Type="Int32" Nullable="false" />
+          <Property Name="id_lote" Type="Int32" Nullable="false" />
+          <Property Name="fecha_plantacion" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="estado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="observaciones" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="LOTE" Relationship="Self.FK_PLANTA_LOTE" FromRole="PLANTA" ToRole="LOTE" />
+        </EntityType>
+        <EntityType Name="PROVEEDOR">
+          <Key>
+            <PropertyRef Name="id_proveedor" />
+          </Key>
+          <Property Name="id_proveedor" Type="Int32" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="cel_fijo" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="tipo_material" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ADM_INSUMOS" Relationship="Self.FK__ADM_INSUM__id_pr__5441852A" FromRole="PROVEEDOR" ToRole="ADM_INSUMOS" />
+          <NavigationProperty Name="INSUMOes" Relationship="Self.FK__INSUMO__id_prove__4D94879B" FromRole="PROVEEDOR" ToRole="INSUMO" />
+        </EntityType>
+        <EntityType Name="REPORTE">
+          <Key>
+            <PropertyRef Name="id_report" />
+          </Key>
+          <Property Name="id_report" Type="Int32" Nullable="false" />
+          <Property Name="id_lote" Type="Int32" />
+          <Property Name="id_usuario" Type="Int32" />
+          <Property Name="fecha" Type="DateTime" Precision="3" />
+          <Property Name="comentarios" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="LOTE" Relationship="Self.FK__REPORTES__id_lot__4222D4EF" FromRole="REPORTES" ToRole="LOTE" />
+          <NavigationProperty Name="USUARIO" Relationship="Self.FK__REPORTES__id_usu__4316F928" FromRole="REPORTES" ToRole="USUARIO" />
+        </EntityType>
+        <EntityType Name="ROL">
+          <Key>
+            <PropertyRef Name="id_rol" />
+          </Key>
+          <Property Name="id_rol" Type="Int32" Nullable="false" />
+          <Property Name="nombre_rol" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="USUARIOs" Relationship="Self.FK__USUARIO__id_rol__398D8EEE" FromRole="ROL" ToRole="USUARIO" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="USUARIO">
+          <Key>
+            <PropertyRef Name="id_usuario" />
+          </Key>
+          <Property Name="id_usuario" Type="Int32" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="contraseña" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="id_rol" Type="Int32" Nullable="false" />
+          <Property Name="estado_verificacion" Type="Boolean" Nullable="false" />
+          <Property Name="codigo_verificacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="estado_usuario" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="CULTIVOes" Relationship="Self.FK__CULTIVO__id_usua__02FC7413" FromRole="USUARIO" ToRole="CULTIVO" />
+          <NavigationProperty Name="LOTEs" Relationship="Self.FK__LOTE__id_usuario__3F466844" FromRole="USUARIO" ToRole="LOTE" />
+          <NavigationProperty Name="REPORTES" Relationship="Self.FK__REPORTES__id_usu__4316F928" FromRole="USUARIO" ToRole="REPORTES" />
+          <NavigationProperty Name="ROL" Relationship="Self.FK__USUARIO__id_rol__398D8EEE" FromRole="USUARIO" ToRole="ROL" />
+        </EntityType>
+        <Association Name="FK__ADM_INSUM__id_in__534D60F1">
+          <End Role="INSUMO" Type="Self.INSUMO" Multiplicity="0..1" />
+          <End Role="ADM_INSUMOS" Type="Self.ADM_INSUMOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INSUMO">
+              <PropertyRef Name="id_insumo" />
+            </Principal>
+            <Dependent Role="ADM_INSUMOS">
+              <PropertyRef Name="id_insumo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ADM_INSUM__id_lo__52593CB8">
+          <End Role="LOTE" Type="Self.LOTE" Multiplicity="0..1" />
+          <End Role="ADM_INSUMOS" Type="Self.ADM_INSUMOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LOTE">
+              <PropertyRef Name="id_lote" />
+            </Principal>
+            <Dependent Role="ADM_INSUMOS">
+              <PropertyRef Name="id_lote" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ADM_INSUM__id_pr__5441852A">
+          <End Role="PROVEEDOR" Type="Self.PROVEEDOR" Multiplicity="0..1" />
+          <End Role="ADM_INSUMOS" Type="Self.ADM_INSUMOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PROVEEDOR">
+              <PropertyRef Name="id_proveedor" />
+            </Principal>
+            <Dependent Role="ADM_INSUMOS">
+              <PropertyRef Name="id_proveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CULTIVO__id_usua__02FC7413">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="CULTIVO" Type="Self.CULTIVO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="id_usuario" />
+            </Principal>
+            <Dependent Role="CULTIVO">
+              <PropertyRef Name="id_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LOTE_CULTIVO">
+          <End Role="CULTIVO" Type="Self.CULTIVO" Multiplicity="0..1" />
+          <End Role="LOTE" Type="Self.LOTE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CULTIVO">
+              <PropertyRef Name="id_cultivo" />
+            </Principal>
+            <Dependent Role="LOTE">
+              <PropertyRef Name="id_cultivo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__INSUMO__id_prove__4D94879B">
+          <End Role="PROVEEDOR" Type="Self.PROVEEDOR" Multiplicity="0..1" />
+          <End Role="INSUMO" Type="Self.INSUMO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PROVEEDOR">
+              <PropertyRef Name="id_proveedor" />
+            </Principal>
+            <Dependent Role="INSUMO">
+              <PropertyRef Name="id_proveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LOTE__id_usuario__3F466844">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="LOTE" Type="Self.LOTE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="id_usuario" />
+            </Principal>
+            <Dependent Role="LOTE">
+              <PropertyRef Name="id_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__REPORTES__id_lot__4222D4EF">
+          <End Role="LOTE" Type="Self.LOTE" Multiplicity="0..1" />
+          <End Role="REPORTES" Type="Self.REPORTE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LOTE">
+              <PropertyRef Name="id_lote" />
+            </Principal>
+            <Dependent Role="REPORTES">
+              <PropertyRef Name="id_lote" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PLANTA_LOTE">
+          <End Role="LOTE" Type="Self.LOTE" Multiplicity="1" />
+          <End Role="PLANTA" Type="Self.PLANTA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LOTE">
+              <PropertyRef Name="id_lote" />
+            </Principal>
+            <Dependent Role="PLANTA">
+              <PropertyRef Name="id_lote" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__REPORTES__id_usu__4316F928">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="0..1" />
+          <End Role="REPORTES" Type="Self.REPORTE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="id_usuario" />
+            </Principal>
+            <Dependent Role="REPORTES">
+              <PropertyRef Name="id_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__USUARIO__id_rol__398D8EEE">
+          <End Role="ROL" Type="Self.ROL" Multiplicity="1" />
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROL">
+              <PropertyRef Name="id_rol" />
+            </Principal>
+            <Dependent Role="USUARIO">
+              <PropertyRef Name="id_rol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CAFETALDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ADM_INSUMOS" EntityType="Self.ADM_INSUMOS" />
+          <EntitySet Name="CULTIVOes" EntityType="Self.CULTIVO" />
+          <EntitySet Name="INSUMOes" EntityType="Self.INSUMO" />
+          <EntitySet Name="LOTEs" EntityType="Self.LOTE" />
+          <EntitySet Name="PLANTAs" EntityType="Self.PLANTA" />
+          <EntitySet Name="PROVEEDORs" EntityType="Self.PROVEEDOR" />
+          <EntitySet Name="REPORTES" EntityType="Self.REPORTE" />
+          <EntitySet Name="ROLs" EntityType="Self.ROL" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="USUARIOs" EntityType="Self.USUARIO" />
+          <AssociationSet Name="FK__ADM_INSUM__id_in__534D60F1" Association="Self.FK__ADM_INSUM__id_in__534D60F1">
+            <End Role="INSUMO" EntitySet="INSUMOes" />
+            <End Role="ADM_INSUMOS" EntitySet="ADM_INSUMOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ADM_INSUM__id_lo__52593CB8" Association="Self.FK__ADM_INSUM__id_lo__52593CB8">
+            <End Role="LOTE" EntitySet="LOTEs" />
+            <End Role="ADM_INSUMOS" EntitySet="ADM_INSUMOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ADM_INSUM__id_pr__5441852A" Association="Self.FK__ADM_INSUM__id_pr__5441852A">
+            <End Role="PROVEEDOR" EntitySet="PROVEEDORs" />
+            <End Role="ADM_INSUMOS" EntitySet="ADM_INSUMOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CULTIVO__id_usua__02FC7413" Association="Self.FK__CULTIVO__id_usua__02FC7413">
+            <End Role="USUARIO" EntitySet="USUARIOs" />
+            <End Role="CULTIVO" EntitySet="CULTIVOes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LOTE_CULTIVO" Association="Self.FK_LOTE_CULTIVO">
+            <End Role="CULTIVO" EntitySet="CULTIVOes" />
+            <End Role="LOTE" EntitySet="LOTEs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__INSUMO__id_prove__4D94879B" Association="Self.FK__INSUMO__id_prove__4D94879B">
+            <End Role="PROVEEDOR" EntitySet="PROVEEDORs" />
+            <End Role="INSUMO" EntitySet="INSUMOes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LOTE__id_usuario__3F466844" Association="Self.FK__LOTE__id_usuario__3F466844">
+            <End Role="USUARIO" EntitySet="USUARIOs" />
+            <End Role="LOTE" EntitySet="LOTEs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__REPORTES__id_lot__4222D4EF" Association="Self.FK__REPORTES__id_lot__4222D4EF">
+            <End Role="LOTE" EntitySet="LOTEs" />
+            <End Role="REPORTES" EntitySet="REPORTES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PLANTA_LOTE" Association="Self.FK_PLANTA_LOTE">
+            <End Role="LOTE" EntitySet="LOTEs" />
+            <End Role="PLANTA" EntitySet="PLANTAs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__REPORTES__id_usu__4316F928" Association="Self.FK__REPORTES__id_usu__4316F928">
+            <End Role="USUARIO" EntitySet="USUARIOs" />
+            <End Role="REPORTES" EntitySet="REPORTES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USUARIO__id_rol__398D8EEE" Association="Self.FK__USUARIO__id_rol__398D8EEE">
+            <End Role="ROL" EntitySet="ROLs" />
+            <End Role="USUARIO" EntitySet="USUARIOs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CAFETALDBModelStoreContainer" CdmEntityContainer="CAFETALDBEntities">
+          <EntitySetMapping Name="ADM_INSUMOS">
+            <EntityTypeMapping TypeName="CAFETALDBModel.ADM_INSUMOS">
+              <MappingFragment StoreEntitySet="ADM_INSUMOS">
+                <ScalarProperty Name="id_aplica" ColumnName="id_aplica" />
+                <ScalarProperty Name="id_lote" ColumnName="id_lote" />
+                <ScalarProperty Name="id_insumo" ColumnName="id_insumo" />
+                <ScalarProperty Name="cant_usada" ColumnName="cant_usada" />
+                <ScalarProperty Name="fecha_aplic" ColumnName="fecha_aplic" />
+                <ScalarProperty Name="id_proveedor" ColumnName="id_proveedor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CULTIVOes">
+            <EntityTypeMapping TypeName="CAFETALDBModel.CULTIVO">
+              <MappingFragment StoreEntitySet="CULTIVO">
+                <ScalarProperty Name="id_cultivo" ColumnName="id_cultivo" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="ubicacion" ColumnName="ubicacion" />
+                <ScalarProperty Name="fecha_inicio" ColumnName="fecha_inicio" />
+                <ScalarProperty Name="fecha_fin" ColumnName="fecha_fin" />
+                <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="INSUMOes">
+            <EntityTypeMapping TypeName="CAFETALDBModel.INSUMO">
+              <MappingFragment StoreEntitySet="INSUMO">
+                <ScalarProperty Name="id_insumo" ColumnName="id_insumo" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
+                <ScalarProperty Name="id_proveedor" ColumnName="id_proveedor" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="f_entrega" ColumnName="f_entrega" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LOTEs">
+            <EntityTypeMapping TypeName="CAFETALDBModel.LOTE">
+              <MappingFragment StoreEntitySet="LOTE">
+                <ScalarProperty Name="id_lote" ColumnName="id_lote" />
+                <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
+                <ScalarProperty Name="variedad" ColumnName="variedad" />
+                <ScalarProperty Name="inicio_siembra" ColumnName="inicio_siembra" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="fecha_fin_siembra" ColumnName="fecha_fin_siembra" />
+                <ScalarProperty Name="area" ColumnName="area" />
+                <ScalarProperty Name="cantidad_plantas" ColumnName="cantidad_plantas" />
+                <ScalarProperty Name="observaciones" ColumnName="observaciones" />
+                <ScalarProperty Name="id_cultivo" ColumnName="id_cultivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PLANTAs">
+            <EntityTypeMapping TypeName="CAFETALDBModel.PLANTA">
+              <MappingFragment StoreEntitySet="PLANTA">
+                <ScalarProperty Name="id_planta" ColumnName="id_planta" />
+                <ScalarProperty Name="id_lote" ColumnName="id_lote" />
+                <ScalarProperty Name="fecha_plantacion" ColumnName="fecha_plantacion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="observaciones" ColumnName="observaciones" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PROVEEDORs">
+            <EntityTypeMapping TypeName="CAFETALDBModel.PROVEEDOR">
+              <MappingFragment StoreEntitySet="PROVEEDOR">
+                <ScalarProperty Name="id_proveedor" ColumnName="id_proveedor" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="cel_fijo" ColumnName="cel_fijo" />
+                <ScalarProperty Name="tipo_material" ColumnName="tipo_material" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="REPORTES">
+            <EntityTypeMapping TypeName="CAFETALDBModel.REPORTE">
+              <MappingFragment StoreEntitySet="REPORTES">
+                <ScalarProperty Name="id_report" ColumnName="id_report" />
+                <ScalarProperty Name="id_lote" ColumnName="id_lote" />
+                <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="comentarios" ColumnName="comentarios" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ROLs">
+            <EntityTypeMapping TypeName="CAFETALDBModel.ROL">
+              <MappingFragment StoreEntitySet="ROL">
+                <ScalarProperty Name="id_rol" ColumnName="id_rol" />
+                <ScalarProperty Name="nombre_rol" ColumnName="nombre_rol" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="CAFETALDBModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USUARIOs">
+            <EntityTypeMapping TypeName="CAFETALDBModel.USUARIO">
+              <MappingFragment StoreEntitySet="USUARIO">
+                <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="correo" ColumnName="correo" />
+                <ScalarProperty Name="contraseña" ColumnName="contraseña" />
+                <ScalarProperty Name="id_rol" ColumnName="id_rol" />
+                <ScalarProperty Name="estado_verificacion" ColumnName="estado_verificacion" />
+                <ScalarProperty Name="codigo_verificacion" ColumnName="codigo_verificacion" />
+                <ScalarProperty Name="estado_usuario" ColumnName="estado_usuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
