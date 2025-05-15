@@ -181,6 +181,8 @@
     <Compile Include="Clases\clsInsumo.cs" />
     <Compile Include="Clases\clsLote.cs" />
     <Compile Include="Clases\clsProveedor.cs" />
+    <Compile Include="Clases\clsReporte.cs" />
+
     <Compile Include="Clases\clsUsuario.cs" />
     <Compile Include="Controllers\Adm_insumosController.cs" />
     <Compile Include="Controllers\CorreoController.cs" />
@@ -188,7 +190,12 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InsumoController.cs" />
     <Compile Include="Controllers\LotesController.cs" />
+
     <Compile Include="Controllers\ProveedorController.cs" />
+
+    <Compile Include="Controllers\PlantsController.cs" />
+    <Compile Include="Controllers\ReporteController.cs" />
+
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
