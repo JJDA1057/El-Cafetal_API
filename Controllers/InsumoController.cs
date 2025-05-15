@@ -93,7 +93,7 @@ namespace API_CAFETAL.Controllers
 
         // POST: api/insumos
         [HttpPost]
-        [Route("Insertar")]
+        [Route("Registrar")]
         public IHttpActionResult RegistrarInsumo([FromBody] INSUMO nuevoInsumo)
         {
             try
