@@ -8,17 +8,16 @@ namespace API_CAFETAL.Clases
 {
     public class clsPlanta
     {
-
-        public Planta planta { get; set; }
-
+        public PLANTA planta { get; set; }  
         private CAFETALDBEntities dbcafetal = new CAFETALDBEntities();
+
 
 
         public string Ingreso()
         {
             try
             {
-                dbcafetal.Plantas.Add(planta);
+                dbcafetal.PLANTAs.Add(planta);
                 dbcafetal.SaveChanges();
                 return "Planta ingresada con exito";
             }
@@ -28,9 +27,12 @@ namespace API_CAFETAL.Clases
             }
         }
 
-        public List<Planta> ConsultarTodos()
+        public List<PLANTA> ConsultarTodos()
         {
-            return dbcafetal.Plantas.ToList();
+            return dbcafetal.PLANTAs.ToList();
         }
+
+
+        
     }
 }
