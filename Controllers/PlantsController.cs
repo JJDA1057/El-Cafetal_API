@@ -19,6 +19,7 @@ namespace API_CAFETAL.Controllers
         {
             clsPlanta planta = new clsPlanta();
             return planta.ConsultarTodos();
+
         }
 
         // GET api/<controller>/5
