@@ -1,9 +1,7 @@
-<<<<<<< HEAD
-﻿using API_CAFETAL.Models;
-=======
+
+using API_CAFETAL.Models;
 ﻿using API_CAFETAL.Controllers;
 using API_CAFETAL.Models;
->>>>>>> master
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -15,17 +13,6 @@ namespace API_CAFETAL.Clases
 {
     public class clsPlanta
     {
-
-
-        public PLANTA planta { get; set; }
-
-        private CAFETALDBEntities dbcafetal = new CAFETALDBEntities();
-
-
-
-
-        
-
         public PLANTA planta { get; set; }
         private CAFETALDBEntities dbcafetal = new CAFETALDBEntities();
 
@@ -118,7 +105,5 @@ namespace API_CAFETAL.Clases
                 return "Sus observaciones fueron denegadas..."+ex.Message;
             }
         }
-
->>>>>>> master
     }
 }
