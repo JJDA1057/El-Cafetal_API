@@ -173,16 +173,14 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
-			<Compile Include="Clases\clsAdm_insumos.cs" />
-			<Compile Include="Clases\clsPlanta.cs" />
-
+    <Compile Include="Clases\clsAdm_insumos.cs" />
+    <Compile Include="Clases\clsPlanta.cs" />
     <Compile Include="Clases\clsCorreo.cs" />
     <Compile Include="Clases\clsCultivo.cs" />
     <Compile Include="Clases\clsInsumo.cs" />
     <Compile Include="Clases\clsLote.cs" />
     <Compile Include="Clases\clsProveedor.cs" />
     <Compile Include="Clases\clsReporte.cs" />
-
     <Compile Include="Clases\clsUsuario.cs" />
     <Compile Include="Controllers\Adm_insumosController.cs" />
     <Compile Include="Controllers\CorreoController.cs" />
@@ -190,17 +188,17 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InsumoController.cs" />
     <Compile Include="Controllers\LotesController.cs" />
-
     <Compile Include="Controllers\ProveedorController.cs" />
-
     <Compile Include="Controllers\PlantsController.cs" />
     <Compile Include="Controllers\ReporteController.cs" />
-
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Enums\TipoAlerta.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Interface\IInventarioObservable.cs" />
+    <Compile Include="Interface\MonitorInventario.cs" />
     <Compile Include="Models\ADM_INSUMOS.cs">
       <DependentUpon>CAFETALDB.tt</DependentUpon>
     </Compile>

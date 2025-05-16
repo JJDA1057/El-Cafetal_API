@@ -1,4 +1,5 @@
 ﻿using API_CAFETAL.Models;
+using El_Cafetal_APP.Clases.Enums;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -169,6 +170,126 @@ namespace API_CAFETAL.Clases
 
         }
 
+        //----------------------------------------------------------------Observer
+
+
+        // Método para consultar insumos con niveles bajos
+        public List<INSUMO> ConsultarNivelesBajos()
+        {
+            var resultado = new List<INSUMO>();
+
+            foreach (var insumo in dbcafetal.INSUMOes.Include("PROVEEDOR").ToList())
+            {
+                string tipoClave = DeterminarTipoBase(insumo.tipo);
+
+                if (_umbralBajo.ContainsKey(tipoClave) && _umbralCritico.ContainsKey(tipoClave))
+                {
+                    int umbralBajo = _umbralBajo[tipoClave];
+                    int umbralCritico = _umbralCritico[tipoClave];
+
+                    // Solo considerar como bajo si no es crítico
+                    if (insumo.cantidad <= umbralBajo && insumo.cantidad > umbralCritico)
+                    {
+                        resultado.Add(insumo);
+                    }
+                }
+            }
+
+            return resultado;
+        }
+
+
+        public List<INSUMO> ConsultarNivelesCriticos()
+        {
+            var resultado = new List<INSUMO>();
+
+            foreach (var insumo in dbcafetal.INSUMOes.Include("PROVEEDOR").ToList())
+            {
+                string tipoClave = DeterminarTipoBase(insumo.tipo);
+
+                if (_umbralCritico.ContainsKey(tipoClave))
+                {
+                    int umbral = _umbralCritico[tipoClave];
+
+                    if (insumo.cantidad <= umbral)
+                    {
+                        resultado.Add(insumo);
+                    }
+                }
+            }
+
+            return resultado;
+        }
+
+
+        // Método para configurar umbrales personalizados
+        //public static void ConfigurarUmbral(string tipo, int umbralBajo, int umbralCritico)
+        //{
+        //    _umbralBajo[tipo] = umbralBajo;
+        //    _umbralCritico[tipo] = umbralCritico;
+        //}
+
+        // Método auxiliar para determinar el tipo base de un insumo
+        private string DeterminarTipoBase(string tipoCompleto)
+        {
+            tipoCompleto = tipoCompleto.ToLowerInvariant().Trim();
+
+            string[] tiposBase = { "semilla", "nutriente", "abono", "fertilizante", "vitamina", "mineral" };
+
+            foreach (var tipo in tiposBase)
+            {
+                if (tipoCompleto.Contains(tipo))
+                {
+                    return tipo;
+                }
+            }
+
+            return tipoCompleto;
+        }
+
+
+        // Método para verificar nivel por ID
+        public TipoAlerta VerificarNivelPorId(int idInsumo)
+        {
+            var insumo = ConsultarPorId(idInsumo);
+            if (insumo == null)
+                return TipoAlerta.Normal;
+
+            string tipoBase = DeterminarTipoBase(insumo.tipo);
+
+            // Verificar nivel crítico primero
+            if (_umbralCritico.ContainsKey(tipoBase) && insumo.cantidad <= _umbralCritico[tipoBase])
+                return TipoAlerta.Critica;
+
+            // Luego verificar nivel bajo
+            if (_umbralBajo.ContainsKey(tipoBase) && insumo.cantidad <= _umbralBajo[tipoBase])
+                return TipoAlerta.Baja;
+
+            return TipoAlerta.Normal;
+        }
+
+
+        private static Dictionary<string, int> _umbralBajo = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+        private static Dictionary<string, int> _umbralCritico = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+
+        static clsInsumo()
+        {
+            // Configuración inicial para semillas
+            _umbralBajo["semilla"] = 30;
+            _umbralCritico["semilla"] = 15;
+
+            // Puedes agregar más tipos según sea necesario
+            _umbralBajo["nutriente"] = 20;
+            _umbralCritico["nutriente"] = 10;
+
+            _umbralBajo["abono"] = 20;
+            _umbralCritico["abono"] = 10;
+
+            _umbralBajo["fertilizante"] = 20;
+            _umbralCritico["fertilizante"] = 10;
+        }
+
+        
 
     }
 }

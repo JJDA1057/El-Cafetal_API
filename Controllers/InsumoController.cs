@@ -7,17 +7,18 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web.Http;
+using System.Web.Mvc;
 
 namespace API_CAFETAL.Controllers
 {
-    [RoutePrefix("api/Insumo")]
+    [System.Web.Http.RoutePrefix("api/Insumo")]
     public class InsumoController : ApiController
     {
         private readonly clsInsumo _insumoManager = new clsInsumo();
 
         // GET: api/insumos
-        [HttpGet]
-        [Route("ConsultarTodos")]
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("ConsultarTodos")]
         public IHttpActionResult ObtenerTodos()
         {
             try
@@ -32,8 +33,8 @@ namespace API_CAFETAL.Controllers
         }
 
         // GET: api/insumos/5
-        [HttpGet]
-        [Route("Consultar/{id}")]
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("Consultar/{id}")]
         public IHttpActionResult ObtenerPorId(int id)
         {
             try
@@ -52,8 +53,8 @@ namespace API_CAFETAL.Controllers
         }
 
         // GET: api/insumos/tipo/fertilizante
-        [HttpGet]
-        [Route("tipo/{tipo}")]
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("tipo/{tipo}")]
         public IHttpActionResult ObtenerPorTipo(string tipo)
         {
             try
@@ -72,8 +73,8 @@ namespace API_CAFETAL.Controllers
         }
 
         // GET: api/insumos/proveedor/3
-        [HttpGet]
-        [Route("ConsultarProveedor/{idProveedor}")]
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("ConsultarProveedor/{idProveedor}")]
         public IHttpActionResult ObtenerPorProveedor(int idProveedor)
         {
             try
@@ -92,8 +93,8 @@ namespace API_CAFETAL.Controllers
         }
 
         // POST: api/insumos
-        [HttpPost]
-        [Route("Registrar")]
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("Registrar")]
         public IHttpActionResult RegistrarInsumo([FromBody] INSUMO nuevoInsumo)
         {
             try
@@ -137,8 +138,8 @@ namespace API_CAFETAL.Controllers
         }
 
         // PUT: api/insumos/5
-        [HttpPut]
-        [Route("Actualizar/{id}")]
+        [System.Web.Http.HttpPut]
+        [System.Web.Http.Route("Actualizar/{id}")]
         public IHttpActionResult ActualizarInsumo(int id, [FromBody] INSUMO insumoActualizado)
         {
             try
@@ -175,8 +176,8 @@ namespace API_CAFETAL.Controllers
         }
 
         // DELETE: api/insumos/5
-        [HttpDelete]
-        [Route("Eliminar/{id}")]
+        [System.Web.Http.HttpDelete]
+        [System.Web.Http.Route("Eliminar/{id}")]
         public IHttpActionResult EliminarInsumo(int id)
         {
             try
@@ -197,8 +198,8 @@ namespace API_CAFETAL.Controllers
         }
 
         // PATCH: api/insumos/5/cantidad
-        [HttpPatch]
-        [Route("{id}/cantidad")]
+        [System.Web.Http.HttpPatch]
+        [System.Web.Http.Route("{id}/cantidad")]
         public IHttpActionResult ActualizarCantidad(int id, [FromBody] ActualizacionCantidadModel model)
         {
             try
@@ -220,12 +221,105 @@ namespace API_CAFETAL.Controllers
                 return InternalServerError(ex);
             }
         }
-    }
+    
 
+
+    //------------------------------------>Observer
+
+    
+    [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("nivelesBajos")]
+        public IHttpActionResult ObtenerNivelesBajos()
+        {
+            try
+            {
+                var resultado = _insumoManager.ConsultarNivelesBajos();
+
+                if (resultado == null || resultado.Count == 0)
+                {
+                    return NotFound();
+                }
+
+                return Ok(resultado);
+            }
+            catch (Exception ex)
+            {
+            return InternalServerError(ex);
+            }
+        }
+
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("nivelesCriticos")]
+        public IHttpActionResult ObtenerNivelesCriticos()
+        {
+            try
+            {
+                var resultado = _insumoManager.ConsultarNivelesCriticos();
+
+                if (resultado == null || resultado.Count == 0)
+                {
+                    return NotFound();
+                }
+
+                return Ok(resultado);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("verificar-nivel/{id}")]
+        public IHttpActionResult VerificarNivel(int id)
+        {
+            try
+            {
+                var resultado = _insumoManager.VerificarNivelPorId(id);
+
+                return Ok(resultado);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        //[System.Web.Http.HttpPost]
+        //[System.Web.Http.Route("configurar-umbrales")]
+        //public IHttpActionResult ConfigurarUmbral([FromBody] UmbralRequest model)
+        //{
+        //    try
+        //    {
+        //        _insumoManager.ConfigurarUmbral(model.Tipo, model.UmbralBajo, model.UmbralCritico);
+
+        //        return Ok($"Umbral para {model.Tipo} actualizado correctamente.");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return InternalServerError(ex);
+        //    }
+        //}
+
+        //public class UmbralRequest
+        //{
+        //    public string Tipo { get; set; }
+        //    public int UmbralBajo { get; set; }
+        //    public int UmbralCritico { get; set; }
+        //}
+
+
+
+
+
+
+
+
+    }
     // Modelo auxiliar para actualización de cantidad
     public class ActualizacionCantidadModel
     {
         public int Cantidad { get; set; }
         public bool EsSuma { get; set; }
-    }
+    };
 }

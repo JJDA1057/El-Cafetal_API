@@ -1,13 +1,9 @@
 
 using API_CAFETAL.Models;
-﻿using API_CAFETAL.Controllers;
-using API_CAFETAL.Models;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace API_CAFETAL.Clases
 {
