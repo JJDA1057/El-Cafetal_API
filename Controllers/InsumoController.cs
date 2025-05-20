@@ -117,6 +117,7 @@ namespace API_CAFETAL.Controllers
                 }
 
                 var resultado = _insumoManager.RegistrarInsumo(
+                    nuevoInsumo.id_insumo,
                     nuevoInsumo.nombre,
                     nuevoInsumo.tipo,
                     nuevoInsumo.id_proveedor.Value, // Usamos .Value para obtener el int

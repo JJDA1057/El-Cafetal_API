@@ -15,7 +15,7 @@ namespace API_CAFETAL.Clases
         
 
 
-        public string RegistrarInsumo(string nombre, string tipo, int idProveedor, int cantidad, DateTime fEntrega)
+        public string RegistrarInsumo(int id, string nombre, string tipo, int idProveedor, int cantidad, DateTime fEntrega)
         {
             try
             {
@@ -27,6 +27,7 @@ namespace API_CAFETAL.Clases
 
                 var nuevoInsumo = new INSUMO
                 {
+                    id_insumo = id,
                     nombre = nombre,
                     tipo = tipo,
                     id_proveedor = idProveedor,

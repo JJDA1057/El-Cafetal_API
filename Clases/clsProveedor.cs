@@ -14,7 +14,7 @@ namespace API_CAFETAL.Clases
         public PROVEEDOR proveedor { get; set; }
 
         // 1. Registrar nuevo proveedor
-        public string RegistrarProveedor(string nombre, string celFijo, string tipoMaterial)
+        public string RegistrarProveedor(int id, string nombre, string celFijo, string tipoMaterial)
         {
             try
             {
@@ -23,6 +23,7 @@ namespace API_CAFETAL.Clases
 
                 var nuevoProveedor = new PROVEEDOR
                 {
+                    id_proveedor = id,
                     nombre = nombre,
                     cel_fijo = celFijo,
                     tipo_material = tipoMaterial
@@ -70,7 +71,7 @@ namespace API_CAFETAL.Clases
                 var proveedor = dbcafetal.PROVEEDORs.Find(idProveedor);
                 if (proveedor == null)
                     return "Proveedor no encontrado";
-
+                proveedor.id_proveedor = idProveedor;
                 proveedor.nombre = nombre;
                 proveedor.cel_fijo = celFijo;
                 proveedor.tipo_material = tipoMaterial;

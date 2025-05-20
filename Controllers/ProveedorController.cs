@@ -83,6 +83,7 @@ namespace API_CAFETAL.Controllers
                 }
 
                 var resultado = _proveedorManager.RegistrarProveedor(
+                    proveedor.id_proveedor,
                     proveedor.nombre,
                     proveedor.cel_fijo,
                     proveedor.tipo_material);
