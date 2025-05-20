@@ -12,7 +12,7 @@ namespace API_CAFETAL.Clases
     {
 
         private CAFETALDBEntities dbcafetal = new CAFETALDBEntities();
-        public INSUMO insumo { get; set; }
+        
 
 
         public string RegistrarInsumo(string nombre, string tipo, int idProveedor, int cantidad, DateTime fEntrega)

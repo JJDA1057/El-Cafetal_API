@@ -9,97 +9,135 @@ namespace API_CAFETAL.Clases
 {
     public class clsPlanta
     {
-        public PLANTA planta { get; set; }
         private CAFETALDBEntities dbcafetal = new CAFETALDBEntities();
 
 
 
-        public string Ingreso()
+        public string RegistrarPlanta(int idPlanta, int idLote, string estado, string observaciones, DateTime fechaPlantacion)
         {
-
-           
             try
             {
-                dbcafetal.PLANTAs.Add(planta);
+                if (!LoteExiste(idLote))
+                    return "El lote no existe";
+
+                var nuevaPlanta = new PLANTA
+                {
+                    id_planta = idPlanta,
+                    id_lote = idLote,
+                    estado = estado,
+                    observaciones = observaciones,
+                    fecha_plantacion = fechaPlantacion
+                };
+
+                dbcafetal.PLANTAs.Add(nuevaPlanta);
                 dbcafetal.SaveChanges();
-                return "Planta ingresada con exito";
+                return "Planta registrada correctamente";
             }
             catch (Exception ex)
             {
-                return "Nos topamos con un error al Ingresar la Planta" + ex.Message;
+                return "Error al registrar planta: " + ex.Message;
             }
         }
 
-        public List<PLANTA> ConsultarTodos()
+        public PLANTA ConsultarPorId(int idPlanta)
         {
-            return dbcafetal.PLANTAs.ToList();
+            return dbcafetal.PLANTAs.FirstOrDefault(p => p.id_planta == idPlanta);
+                
         }
 
-        public async Task<string> IngresoD(int lote, DateTime Fecha_siembra, string estado, string observaciones)
-        {
-            try
-            {
-                PLANTA planta = new PLANTA();
-                planta.id_lote = lote;
-                planta.fecha_plantacion = Fecha_siembra;
-                planta.estado = estado;
-                planta.observaciones = observaciones;
-
-                dbcafetal.PLANTAs.Add(planta);
-                await dbcafetal.SaveChangesAsync();
-
-
-                return "Su planta fue ingresada en el lote con exito ";
-            }
-            catch (Exception ex)
-            {
-                return "Su planta no pudo ser registrada " + ex.Message;
-            }
-        }
-        public string ModificarEstado(int id_planta, string estado)
+        public string Borrar(int idPlanta)
         {
             try
             {
-                var Planta_ingresada = dbcafetal.PLANTAs.Find(id_planta);
-                if (Planta_ingresada == null)
-                    return "Planta no encontrada con el ID diligenciado";
+                // Buscar la planta por ID
+                var planta = dbcafetal.PLANTAs.Find(idPlanta);
 
-                Planta_ingresada.estado = estado;
+                // Verificar si existe
+                if (planta == null)
+                    return "Planta no encontrada";
+
+                // Eliminar la planta
+                dbcafetal.PLANTAs.Remove(planta);
                 dbcafetal.SaveChanges();
 
-                return "Estado Restaurado";
+                return "Planta eliminada correctamente";
             }
             catch (Exception ex)
             {
-                return "No pudimos modificar el estado de su planta" + ex.Message;
+                // Manejo de errores similar a ModificarEstado
+                return "Error al eliminar la planta: " + ex.Message;
             }
-
-
-
         }
 
-        public List<PLANTA> consultarXLote(int lote)
-        {
-            return dbcafetal.PLANTAs.Where(e => e.id_lote == lote).ToList();
-        }
-
-        public string ModificarObservaciones(int id_planta, string observacion)
+        public string ModificarEstado(int idPlanta, string nuevoEstado)
         {
             try
             {
-                var planta_ingresada = dbcafetal.PLANTAs.Find(id_planta);
-                if (planta_ingresada == null)
-                    return "No se encontre esta planta con este ID";
+                var planta = dbcafetal.PLANTAs.Find(idPlanta);
+                if (planta == null)
+                    return "Planta no encontrada";
 
-                planta_ingresada.observaciones= observacion;
+                planta.estado = nuevoEstado;
                 dbcafetal.SaveChanges();
-
-                return "Sus observaciones fueron modificadas con exito";
+                return "Estado actualizado correctamente";
             }
             catch (Exception ex)
             {
-                return "Sus observaciones fueron denegadas..."+ex.Message;
+                return "Error al modificar estado: " + ex.Message;
             }
+        }
+
+        public string ModificarObservaciones(int idPlanta, string nuevasObservaciones)
+        {
+            try
+            {
+                var planta = dbcafetal.PLANTAs.Find(idPlanta);
+                if (planta == null)
+                    return "Planta no encontrada";
+
+                planta.observaciones = nuevasObservaciones;
+                dbcafetal.SaveChanges();
+                return "Observaciones actualizadas correctamente";
+            }
+            catch (Exception ex)
+            {
+                return "Error al modificar observaciones: " + ex.Message;
+            }
+        }
+
+        public List<PLANTA> ConsultarPorLote(int idLote)
+        {
+            try
+            {
+                return dbcafetal.PLANTAs.Where(p => p.id_lote == idLote).ToList();
+            }
+            catch
+            {
+                return new List<PLANTA>();
+            }
+        }
+
+        public List<PLANTA> ConsultarTodas()
+        {
+            try
+            {
+                return dbcafetal.PLANTAs.ToList();
+            }
+            catch
+            {
+                return new List<PLANTA>();
+            }
+        }
+
+        // Métodos auxiliares
+        private bool LoteExiste(int idLote)
+        {
+            return dbcafetal.LOTEs.Any(l => l.id_lote == idLote);
+        }
+
+        private bool PlantaExiste(int idPlanta)
+        {
+            return dbcafetal.PLANTAs.Any(p => p.id_planta == idPlanta);
         }
     }
 }

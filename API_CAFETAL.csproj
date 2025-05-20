@@ -189,7 +189,7 @@
     <Compile Include="Controllers\InsumoController.cs" />
     <Compile Include="Controllers\LotesController.cs" />
     <Compile Include="Controllers\ProveedorController.cs" />
-    <Compile Include="Controllers\PlantsController.cs" />
+    <Compile Include="Controllers\PlantaController.cs" />
     <Compile Include="Controllers\ReporteController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />

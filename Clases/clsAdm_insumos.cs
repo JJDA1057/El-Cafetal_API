@@ -179,6 +179,27 @@ namespace API_CAFETAL.Clases
                 .ToList();
         }
 
+        // Método en clsAdm_insumos para consultar consumo de fertilizantes por lote
+        public List<dynamic> ConsultarFertilizantesPorLote(int idLote)
+        {
+            return dbcafetal.ADM_INSUMOS
+            .Include("LOTE")
+            .Include("INSUMO")
+            .Where(a => a.id_lote == idLote && a.INSUMO.tipo == "FERTILIZANTE")
+            .OrderByDescending(a => a.fecha_aplic)
+            .Select(a => new
+            {
+                LoteId = a.id_lote,
+                Variedad = a.LOTE.variedad,
+                Area = a.LOTE.area,
+                Fertilizante = a.INSUMO.nombre,
+                Cantidad = a.cant_usada,
+                Unidad = a.INSUMO.nombre,
+                Fecha = a.fecha_aplic
+            })
+            .ToList<dynamic>();
+        }
+
         // Métodos de validación
         private bool LoteExiste(int idLote) => dbcafetal.LOTEs.Any(l => l.id_lote == idLote);
         private bool InsumoExiste(int idInsumo) => dbcafetal.INSUMOes.Any(i => i.id_insumo == idInsumo);

@@ -7,16 +7,17 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web.Http;
+using System.Web.Mvc;
 
 namespace API_CAFETAL.Controllers
-{   
-    [RoutePrefix("api/adminsumos")]
+{
+    [System.Web.Http.RoutePrefix("api/adminsumos")]
     public class AdmInsumosController : ApiController
     {
         private readonly clsAdmInsumos _admInsumosManager = new clsAdmInsumos();
 
-        [HttpPost]
-        [Route("Insertar")]
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("Insertar")]
         public IHttpActionResult InsertarAplicacion([FromBody] ADM_INSUMOS nuevaAplicacion)
         {
             try
@@ -67,8 +68,8 @@ namespace API_CAFETAL.Controllers
         }
 
         // GET: api/adminsumos/ConsultarTodo
-        [HttpGet]
-        [Route("ConsultarTodo")]
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("ConsultarTodo")]
         public IHttpActionResult ConsultarTodo()
         {
             try
@@ -83,8 +84,8 @@ namespace API_CAFETAL.Controllers
         }
 
         // GET: api/adminsumos/ConsultaloteA/5
-        [HttpGet]
-        [Route("ConsultaloteA/{idLote}")]
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("ConsultaloteA/{idLote}")]
         public IHttpActionResult ConsultarPorLote(int idLote)
         {
             try
@@ -103,8 +104,8 @@ namespace API_CAFETAL.Controllers
         }
 
         // GET: api/adminsumos/ConsultainsumoA/3
-        [HttpGet]
-        [Route("ConsultainsumoA/{idInsumo}")]
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("ConsultainsumoA/{idInsumo}")]
         public IHttpActionResult ConsultarPorInsumo(int idInsumo)
         {
             try
@@ -123,8 +124,8 @@ namespace API_CAFETAL.Controllers
         }
 
         // GET: api/adminsumos/ConsultafechaA?desde=2023-01-01&hasta=2023-12-31
-        [HttpGet]
-        [Route("ConsultafechaA")]
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("ConsultafechaA")]
         public IHttpActionResult ConsultarPorFecha([FromUri] DateTime desde, [FromUri] DateTime hasta)
         {
             try
@@ -143,8 +144,8 @@ namespace API_CAFETAL.Controllers
         }
 
         // DELETE: api/adminsumos/revertir/5
-        [HttpDelete]
-        [Route("revertir/{idAplica}")]
+        [System.Web.Http.HttpDelete]
+        [System.Web.Http.Route("revertir/{idAplica}")]
         public IHttpActionResult RevertirAplicacion(int idAplica)
         {
             try
@@ -165,8 +166,8 @@ namespace API_CAFETAL.Controllers
         }
 
         // GET: api/adminsumos/reportes/masusados
-        [HttpGet]
-        [Route("reportes/masusados")]
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("reportes/masusados")]
         public IHttpActionResult ReporteInsumosMasUsados()
         {
             try
@@ -181,14 +182,29 @@ namespace API_CAFETAL.Controllers
         }
 
         // GET: api/adminsumos/reportes/consumomensual
-        [HttpGet]
-        [Route("reportes/consumomensual")]
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("reportes/consumomensual")]
         public IHttpActionResult ReporteConsumoMensual()
         {
             try
             {
                 var reporte = _admInsumosManager.ObtenerConsumoMensual();
                 return Ok(reporte);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("porLote/{idLote}")]
+        public IHttpActionResult ObtenerFertilizantesPorLote(int idLote)
+        {
+            try 
+            {
+                var resultado = _admInsumosManager.ConsultarFertilizantesPorLote(idLote);
+                    return Ok(resultado);
             }
             catch (Exception ex)
             {
