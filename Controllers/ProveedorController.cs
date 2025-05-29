@@ -72,7 +72,7 @@ namespace API_CAFETAL.Controllers
 
         // POST: api/proveedores
         [HttpPost]
-        [Route("Insertar")]
+        [Route("Registrar")]
         public IHttpActionResult RegistrarProveedor([FromBody] PROVEEDOR proveedor)
         {
             try
